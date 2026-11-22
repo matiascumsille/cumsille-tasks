@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tasks">
+<meta name="theme-color" content="#1C2826">
+<meta name="robots" content="noindex">
+<title>Tasks</title>
+<style>
+  :root { color-scheme: light; --ink: #1C1A17; --muted: #6E675E; --paper: #F3F0E8; --card: #FFFCF7; --line: #E0D6C8; --green: #1F6F5B; --header: #1C2826; --cream: #F4F0E6; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); }
+  body { font: 17px/1.35 system-ui, "Segoe UI", sans-serif; min-height: 100dvh; }
+  header { background: var(--header); color: var(--cream); padding: calc(18px + env(safe-area-inset-top)) 20px 16px; }
+  .eyebrow { margin: 0; letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px; opacity: 0.72; }
+  h1 { margin: 2px 0 0; font-size: 32px; font-weight: 600; letter-spacing: -0.03em; }
+  #count { margin: 8px 0 0; color: #D5E4DE; font-size: 15px; }
+  main { padding: 16px 16px calc(28px + env(safe-area-inset-bottom)); max-width: 680px; margin: 0 auto; }
+  h2 { margin: 18px 4px 8px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  li { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+  li.done { opacity: 0.72; }
+  li.done .title { text-decoration: line-through; }
+  .title { font-size: 18px; margin: 0; }
+  .when { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+  .note { margin: 22px 4px 0; color: var(--muted); font-size: 14px; }
+  .alert { color: #A33B32; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">Cumsille</p>
+  <h1>Tasks</h1>
+  <p id="count">Loading</p>
+</header>
+<main>
+  <p id="error" class="alert" role="alert"></p>
+  <p id="empty" class="empty" hidden>Nothing open.</p>
+  <h2 id="open-label">Open</h2>
+  <ul id="open"></ul>
+  <h2 id="done-label" hidden>Done</h2>
+  <ul id="done" hidden></ul>
+  <p class="note">To keep this on the Home Screen, tap Share, then Add to Home Screen.</p>
+</main>
+<script>
+  const count = document.getElementById("count");
+  const error = document.getElementById("error");
+  const empty = document.getElementById("empty");
+  const openList = document.getElementById("open");
+  const doneList = document.getElementById("done");
+  const doneLabel = document.getElementById("done-label");
+  const standalone = window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
+  if (standalone) document.querySelector(".note").hidden = true;
+
+  function when(value) {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function row(task) {
+    const item = document.createElement("li");
+    if (task.completedAtUtc) item.className = "done";
+    const title = document.createElement("p");
+    title.className = "title";
+    title.textContent = task.title;
+    const meta = document.createElement("p");
+    meta.className = "when";
+    meta.textContent = task.completedAtUtc ? "Done " + when(task.completedAtUtc) : "Added " + when(task.createdAtUtc);
+    item.append(title, meta);
+    return item;
+  }
+
+  function render(tasks) {
+    const open = tasks.filter(task => !task.completedAtUtc);
+    const done = tasks.filter(task => task.completedAtUtc);
+    count.textContent = open.length === 1 ? "1 open" : open.length + " open";
+    empty.hidden = open.length !== 0;
+    openList.replaceChildren(...open.map(row));
+    doneList.replaceChildren(...done.map(row));
+    doneLabel.hidden = done.length === 0;
+    doneList.hidden = done.length === 0;
+  }
+
+  async function refresh() {
+    try {
+      const response = await fetch("tasks.json?t=" + Date.now());
+      if (!response.ok) throw new Error("The list could not be loaded.");
+      const data = await response.json();
+      error.textContent = "";
+      render(data.tasks || []);
+    } catch (e) {
+      error.textContent = "The list could not be loaded.";
+      count.textContent = "Household list";
+    }
+  }
+
+  refresh();
+  setInterval(refresh, 30000);
+</script>
+</body>
+</html>
