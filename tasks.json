@@ -1,0 +1,53 @@
+{
+    "updatedAtUtc":  "2026-11-22T21:35:00Z",
+    "tasks":  [
+                  {
+                      "title":  "Warranty Deed on Spruce Mountain Property",
+                      "createdAtUtc":  "2026-11-15T05:35:32.9052369Z",
+                      "id":  "f5bd91d8-a417-4a78-ac57-c98b3ab653e1",
+                      "completedAtUtc":  null
+                  },
+                  {
+                      "title":  "Sign Matias and Katie Will",
+                      "createdAtUtc":  "2026-11-15T05:35:18.0219128Z",
+                      "id":  "b7fa8010-ce0b-4ba0-8387-84df040c4373",
+                      "completedAtUtc":  null
+                  },
+                  {
+                      "title":  "Check beneficiary status on PERA 401K Account",
+                      "createdAtUtc":  "2026-11-15T05:34:54.2497355Z",
+                      "id":  "8535f70b-a31a-479f-b52d-a5e07d15034a",
+                      "completedAtUtc":  null
+                  },
+                  {
+                      "title":  "Check beneficiary status on Coinbase",
+                      "createdAtUtc":  "2026-11-15T05:34:43.0700153Z",
+                      "id":  "f61c65dc-8f33-47b9-8d37-0c7f30c44219",
+                      "completedAtUtc":  null
+                  },
+                  {
+                      "title":  "Check beneficiary status on Morgan Stanley Account",
+                      "createdAtUtc":  "2026-11-15T05:34:32.2739908Z",
+                      "id":  "93003789-7d09-4920-8140-1c3e0eb53d96",
+                      "completedAtUtc":  null
+                  },
+                  {
+                      "title":  "Record Warranty Deed to add Katie as owner of 9196 Curtis Rd.",
+                      "createdAtUtc":  "2026-11-15T05:33:51.0399422Z",
+                      "id":  "57bb4e5f-ab7a-44a9-bab4-5f20a444b02f",
+                      "completedAtUtc":  null
+                  },
+                  {
+                      "title":  "Check beneficiary status on Katie IRA",
+                      "createdAtUtc":  "2026-11-15T05:34:23.1150607Z",
+                      "id":  "69da0ab6-e731-4b26-858f-f68cd8f3ad21",
+                      "completedAtUtc":  "2026-11-15T05:58:30.5144233Z"
+                  },
+                  {
+                      "title":  "Check beneficiary status on Matias SEP-IRA",
+                      "createdAtUtc":  "2026-11-15T05:34:15.9662057Z",
+                      "id":  "3bd4554c-518d-4d19-a18a-648fce738168",
+                      "completedAtUtc":  "2026-11-15T05:54:51.7940264Z"
+                  }
+              ]
+}
