@@ -27,7 +27,11 @@
   li.done .title { text-decoration: line-through; }
   .title { font-size: 18px; margin: 0; }
   .when { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
-  .note { margin: 22px 4px 0; color: var(--muted); font-size: 14px; }
+  .install { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; margin: 0 0 8px; }
+  .install h2 { margin: 0 0 8px; color: var(--green); }
+  .install p { margin: 0; }
+  .install ol { margin: 8px 0 0; padding-left: 22px; }
+  .install li { background: transparent; border: 0; border-radius: 0; padding: 2px 0; }
   .alert { color: #A33B32; }
   [hidden] { display: none !important; }
 </style>
@@ -39,13 +43,22 @@
   <p id="count">Loading</p>
 </header>
 <main>
+  <section class="install" id="install">
+    <h2>iPhone</h2>
+    <p>Put this list on both iPhones.</p>
+    <ol>
+      <li>Open this page in Safari.</li>
+      <li>Tap Share.</li>
+      <li>Tap Add to Home Screen.</li>
+      <li>Do the same on the other iPhone.</li>
+    </ol>
+  </section>
   <p id="error" class="alert" role="alert"></p>
   <p id="empty" class="empty" hidden>Nothing open.</p>
   <h2 id="open-label">Open</h2>
   <ul id="open"></ul>
   <h2 id="done-label" hidden>Done</h2>
   <ul id="done" hidden></ul>
-  <p class="note">To keep this on the Home Screen, tap Share, then Add to Home Screen.</p>
 </main>
 <script>
   const count = document.getElementById("count");
@@ -55,7 +68,7 @@
   const doneList = document.getElementById("done");
   const doneLabel = document.getElementById("done-label");
   const standalone = window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
-  if (standalone) document.querySelector(".note").hidden = true;
+  if (standalone) document.getElementById("install").hidden = true;
 
   function when(value) {
     if (!value) return "";
